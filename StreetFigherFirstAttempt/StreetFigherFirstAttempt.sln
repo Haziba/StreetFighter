@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StreetFigherFirstAttempt", "StreetFigherFirstAttempt\StreetFigherFirstAttempt.vcxproj", "{C3A801F3-AF1E-498F-8EB7-66BFC7646F2C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C3A801F3-AF1E-498F-8EB7-66BFC7646F2C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C3A801F3-AF1E-498F-8EB7-66BFC7646F2C}.Debug|Win32.Build.0 = Debug|Win32
+		{C3A801F3-AF1E-498F-8EB7-66BFC7646F2C}.Release|Win32.ActiveCfg = Release|Win32
+		{C3A801F3-AF1E-498F-8EB7-66BFC7646F2C}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
