@@ -19,8 +19,8 @@ private:
 
 	BloodHit blood[30];
 
+	bool paused;
 
-	Player *character;
 
 	void NewBloodAt(BloodHit (&blood)[30], Point attackEndPoint);
 	bool TestHitBoxes(Player *attacker, Player *defender, HealthBar *defenderHealth, BloodHit (&blood)[30]);

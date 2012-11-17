@@ -2,7 +2,7 @@
 
 
 Chun::Chun(Sprite (&animationSet)[TOTAL_PLAYER_ANIMATIONS], Direction direcSet)
-	: Player(animationSet, direcSet)
+	: Player(animationSet, direcSet, 1)
 {
 	Rect punchBox[5] = {Rect(0, 0, 0, 0), Rect(77, 9, 39, 17), Rect(85, 9, 39, 17), Rect(77, 9, 39, 17), Rect(0, 0, 0, 0)};
 	std::copy(punchBox, punchBox+5, attackBoxes[PUNCHING]);

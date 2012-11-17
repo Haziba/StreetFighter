@@ -5,7 +5,7 @@
 
 using namespace Gdiplus;
 
-const int TOTAL_IMAGES = 22;
+const int TOTAL_IMAGES = 25;
 
 enum ImageName
 {
@@ -31,6 +31,9 @@ enum ImageName
 	CHUN_DEATH=19,
 	RYU_KICK=20,
 	CHUN_KICK=21,
+	PAUSE_OVERLAY=22,
+	RYU_CROUCH=23,
+	CHUN_CROUCH=24,
 };
 
 enum Direction

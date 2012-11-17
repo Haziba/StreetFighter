@@ -2,16 +2,19 @@
 
 
 Game::Game(Sprite (&r)[TOTAL_PLAYER_ANIMATIONS], Sprite (&c)[TOTAL_PLAYER_ANIMATIONS])
-	: ryu(r, LEFT), chun(c, RIGHT), ryuHealth(LEFT), chunHealth(RIGHT), character(&ryu)
+	: ryu(r, LEFT), chun(c, RIGHT), ryuHealth(LEFT), chunHealth(RIGHT), character(&ryu), paused(false)
 {}
 
 void Game::Update(InputHandler input)
 {
-	if(!(chunHealth.Dead() || ryuHealth.Dead()))
-		character->Input(input);
-
-	if(true)
+	if(!paused)
 	{
+		if(!(chunHealth.Dead() || ryuHealth.Dead()))
+		{
+			ryu.Input(input);
+			chun.Input(input);
+		}
+
 		ryu.Update();
 		chun.Update();
 		
@@ -35,18 +38,10 @@ void Game::Update(InputHandler input)
 			blood[i].Update();
 	}
 
-	//if(keys[VK_RETURN] && !oldKeys[VK_RETURN])
-	//	paused = !paused;
+	if(input.IsPressed(VK_RETURN))
+		paused = !paused;
 	if(input.IsPressed(VK_ESCAPE))
 		PostQuitMessage(0);
-	if(input.IsPressed(VK_TAB))
-	{
-		character->ReleaseControl();
-		if(character == &ryu)
-			character = &chun;
-		else
-			character = &ryu;
-	}
 }
 
 void Game::Draw(ImageHandler *img)
@@ -58,6 +53,8 @@ void Game::Draw(ImageHandler *img)
 	chunHealth.Draw(img);
 	for(int i = 0; i < 30; i++)
 		blood[i].Draw(img);
+	if(paused)
+		img->DrawSprite(PAUSE_OVERLAY);
 }
 
 void Game::NewBloodAt(BloodHit (&blood)[30], Point attackEndPoint)

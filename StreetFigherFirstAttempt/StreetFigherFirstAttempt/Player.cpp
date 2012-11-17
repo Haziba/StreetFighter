@@ -1,10 +1,12 @@
 #include "Player.h"
 
-Player::Player(Sprite (&animationSet)[TOTAL_PLAYER_ANIMATIONS], Direction direcSet) :
+Player::Player(Sprite (&animationSet)[TOTAL_PLAYER_ANIMATIONS], Direction direcSet, int playerNumSet) :
 	direc(direcSet),
+	playerNum(playerNumSet),
 	topHitBox(0, 0, 50, 50),
 	bottomHitBox(0, 50, 50, 50),
-	state(STANDING)
+	state(STANDING),
+	comboStep(0)
 {
 	std::copy(&animationSet[0], &animationSet[TOTAL_PLAYER_ANIMATIONS], &animations[0]);
 	currentImage = &animations[STAND];
@@ -15,6 +17,18 @@ Player::Player(Sprite (&animationSet)[TOTAL_PLAYER_ANIMATIONS], Direction direcS
 			animations[i].bitmap->RotateFlip(RotateNoneFlipX);
 			animations[i].shiftX = animationSet[STAND].width-animationSet[i].width-animationSet[i].shiftX;
 		}
+	
+	keys[0][K_LEFT] = 0x41;
+	keys[0][K_RIGHT] = 0x44;
+	keys[0][K_DOWN] = 0x53;
+	keys[0][K_PUNCH] = 0x47;
+	keys[0][K_KICK] = 0x48;
+	
+	keys[1][K_LEFT] = VK_LEFT;
+	keys[1][K_RIGHT] = VK_RIGHT;
+	keys[1][K_DOWN] = VK_DOWN;
+	keys[1][K_PUNCH] = 0x61;
+	keys[1][K_KICK] = 0x62;
 }
 
 void Player::Draw(ImageHandler * img)
@@ -46,17 +60,30 @@ void Player::Input(InputHandler input)
 {
 	if(!Attacking() && !GettingHit())
 	{
-		if(input.IsPressed(0x5A))
+		if(input.IsPressed(keys[playerNum][K_PUNCH]))
 			Punch();
-		if(input.IsPressed(0x58))
+		if(input.IsPressed(keys[playerNum][K_KICK]))
 			Kick();
-		if(input.IsDown(VK_LEFT) && currentImage->x > -50)
-			WalkLeft(input.IsDown(VK_RIGHT));
-		if(input.IsDown(VK_RIGHT) && currentImage->x < SCREEN_WIDTH - animations[STAND].width)
-			WalkRight(input.IsDown(VK_LEFT));
-		if((!input.IsDown(VK_RIGHT) && state == WALKING_RIGHT) || (!input.IsDown(VK_LEFT) && state == WALKING_LEFT))
+		if(input.IsDown(keys[playerNum][K_LEFT]) && currentImage->x > -50)
+			WalkLeft(input.IsDown(keys[playerNum][K_RIGHT]));
+		if(input.IsDown(keys[playerNum][K_RIGHT]) && currentImage->x < SCREEN_WIDTH - animations[STAND].width)
+			WalkRight(input.IsDown(keys[playerNum][K_LEFT]));
+		if(input.IsDown(keys[playerNum][K_DOWN]) && !((input.IsDown(keys[playerNum][K_RIGHT]) && state == WALKING_RIGHT) || (input.IsDown(keys[playerNum][K_LEFT]) && state == WALKING_LEFT)) && !Attacking() && !GettingHit())
+			Crouch();
+		if((!input.IsDown(keys[playerNum][K_RIGHT]) && state == WALKING_RIGHT) || (!input.IsDown(keys[playerNum][K_LEFT]) && state == WALKING_LEFT) || (!input.IsDown(keys[playerNum][K_DOWN]) && state == CROUCHING))
 			Stand();
 	}
+
+	int comboSteps[][2] = {{keys[playerNum][K_DOWN], -1}, {keys[playerNum][K_RIGHT], keys[playerNum][K_DOWN]}, {keys[playerNum][K_RIGHT], -1}, {0x5A, -1}};
+
+	bool nextComboStep = true;
+	for(int i = 0; i < 2; i++)
+		if(!input.IsDown(comboSteps[comboStep][i]) && comboSteps[comboStep][i] >= 0)
+			nextComboStep = false;
+	if(nextComboStep)
+		comboStep++;
+	if(comboStep >= 4)
+		comboStep = 0;
 }
 
 bool Player::CheckCollision(Rect attackBox)
@@ -64,7 +91,7 @@ bool Player::CheckCollision(Rect attackBox)
 	if(!GettingHit())
 	{
 		Rect checkBox = attackBox;
-		if(checkBox.Intersect(topHitBox))
+		if(checkBox.Intersect(topHitBox) && state != CROUCHING)
 		{
 			ChangeImage(&animations[HIT_HIGH]);
 			state = BEING_HIT_HIGH;
@@ -136,6 +163,15 @@ void Player::Stand()
 {
 	ChangeImage(&animations[STAND]);
 	state = STANDING;
+}
+
+void Player::Crouch()
+{
+	if(state != CROUCHING)
+	{
+		ChangeImage(&animations[CROUCH]);
+		state = CROUCHING;
+	}
 }
 
 void Player::WalkRight(bool leftKeyDown)

@@ -6,7 +6,7 @@
 #include "InputHandler.h"
 #include <iostream>
 
-const int TOTAL_PLAYER_ANIMATIONS = 8;
+const int TOTAL_PLAYER_ANIMATIONS = 9;
 
 enum PlayerStates
 {
@@ -18,6 +18,7 @@ enum PlayerStates
 	VICTORYING = 5,
 	DIEING = 6,
 	KICKING = 7,
+	CROUCHING = 8,
 };
 
 enum PlayerAnimations
@@ -30,6 +31,16 @@ enum PlayerAnimations
 	VICTORY = 5,
 	DEATH = 6,
 	KICK = 7,
+	CROUCH = 8,
+};
+
+enum Controls
+{
+	K_LEFT,
+	K_RIGHT,
+	K_DOWN,
+	K_PUNCH,
+	K_KICK
 };
 
 class Player
@@ -38,6 +49,8 @@ private:
 	Sprite animations[TOTAL_PLAYER_ANIMATIONS];
 
 	Sprite * currentImage;
+	int playerNum;
+	int keys[2][5];
 
 	PlayerStates state;
 	Direction direc;
@@ -47,6 +60,8 @@ private:
 
 	Rect attackBox;
 	bool attacking;
+
+	int comboStep;
 
 	void NextFrame();
 	void ChangeImage(Sprite *nextImage);
@@ -64,12 +79,13 @@ private:
 	void Stand();
 	void Punch();
 	void Kick();
+	void Crouch();
 
 protected:
 	Rect attackBoxes[TOTAL_PLAYER_ANIMATIONS][32];
 
 public:
-	Player(Sprite (&animationSet)[TOTAL_PLAYER_ANIMATIONS], Direction direcSet);
+	Player(Sprite (&animationSet)[TOTAL_PLAYER_ANIMATIONS], Direction direcSet, int playerNumSet);
 	void Draw(ImageHandler * img);
 	void Update();
 

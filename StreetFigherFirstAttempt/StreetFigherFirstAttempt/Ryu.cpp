@@ -2,7 +2,7 @@
 
 
 Ryu::Ryu(Sprite (&animationSet)[TOTAL_PLAYER_ANIMATIONS], Direction direcSet)
-	: Player(animationSet, direcSet)
+	: Player(animationSet, direcSet, 0)
 {
 	Rect punchBox[5] = {Rect(0, 0, 0, 0), Rect(69, 12, 52, 20), Rect(69, 12, 52, 20), Rect(0, 0, 0, 0), Rect(0, 0, 0, 0)};
 	std::copy(punchBox, punchBox+5, attackBoxes[PUNCHING]);
