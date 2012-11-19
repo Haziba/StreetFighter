@@ -5,7 +5,7 @@
 
 using namespace Gdiplus;
 
-const int TOTAL_IMAGES = 27;
+const int TOTAL_IMAGES = 28;
 
 enum ImageName
 {
@@ -36,6 +36,7 @@ enum ImageName
 	CHUN_CROUCH=24,
 	RYU_SPECIAL=25,
 	CHUN_SPECIAL=26,
+	FIREBALL=27,
 };
 
 enum Direction

@@ -1,8 +1,8 @@
 #include "Game.h"
 
 
-Game::Game(Sprite (&r)[TOTAL_PLAYER_ANIMATIONS], Sprite (&c)[TOTAL_PLAYER_ANIMATIONS])
-	: ryu(r, LEFT), chun(c, RIGHT), ryuHealth(LEFT), chunHealth(RIGHT), paused(false)
+Game::Game(Sprite (&r)[TOTAL_PLAYER_ANIMATIONS], Sprite (&c)[TOTAL_PLAYER_ANIMATIONS], Sprite fireballSet)
+	: ryu(r, LEFT), chun(c, RIGHT), ryuHealth(LEFT), chunHealth(RIGHT), fireball(fireballSet), fireballActive(false), paused(false)
 {}
 
 void Game::Update(InputHandler input)
@@ -20,6 +20,22 @@ void Game::Update(InputHandler input)
 		
 		TestHitBoxes(&ryu, &chun, &chunHealth, blood);
 		TestHitBoxes(&chun, &ryu, &ryuHealth, blood);
+
+		if(fireballActive)
+		{
+			fireball.currentFrame++;
+			if(fireball.currentFrame >= fireball.frames)
+				fireball.currentFrame = 0;
+			fireball.x += 20;
+		}
+
+		if(ryu.ThrowFireball())
+		{
+			fireballActive = true;
+			Point fbStart = ryu.FireballStart();
+			fireball.x = fbStart.X - fireball.shiftX;
+			fireball.y = fbStart.Y - fireball.shiftY;
+		}
 
 		if(chunHealth.Dead())
 		{
@@ -53,6 +69,8 @@ void Game::Draw(ImageHandler *img)
 	chunHealth.Draw(img);
 	for(int i = 0; i < 30; i++)
 		blood[i].Draw(img);
+	if(fireballActive)
+		img->DrawSprite(fireball);
 	if(paused)
 		img->DrawSprite(PAUSE_OVERLAY);
 }

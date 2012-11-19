@@ -89,6 +89,9 @@ private:
 
 protected:
 	Rect attackBoxes[TOTAL_PLAYER_ANIMATIONS][41];
+	PlayerStates State();
+	int CurrentFrame();
+	Point BasePoint();
 
 public:
 	Player(Sprite (&animationSet)[TOTAL_PLAYER_ANIMATIONS], Direction direcSet, int playerNumSet);

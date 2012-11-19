@@ -202,6 +202,21 @@ void Player::Special()
 	state = SPECIALING;
 }
 
+PlayerStates Player::State()
+{
+	return state;
+}
+
+int Player::CurrentFrame()
+{
+	return currentImage->currentFrame;
+}
+
+Point Player::BasePoint()
+{
+	return Point(animations[STAND].x, animations[STAND].y);
+}
+
 void Player::WalkRight(bool leftKeyDown)
 {
 	if(state == STANDING || (state == WALKING_LEFT && !leftKeyDown))

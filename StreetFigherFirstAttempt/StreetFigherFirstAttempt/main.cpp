@@ -59,12 +59,13 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	imgSet.LoadABitmap(L"Images/HealthBarYellow.png", HEALTH_BAR_YELLOW, 0, 0, 216, 15);
 	
 	imgSet.LoadABitmap(L"Images/BloodDrop.png", BLOOD_DROP, 0, 0, 5, 5);
+	imgSet.LoadABitmap(L"Images/Fireball.png", FIREBALL, 0, 0, 384, 224, 146, 72, 8);
 
 	Sprite r[TOTAL_PLAYER_ANIMATIONS] = {imgSet.GetSprite(RYU_STAND),  imgSet.GetSprite(RYU_MOVE_RIGHT),  imgSet.GetSprite(RYU_MOVE_LEFT),  imgSet.GetSprite(RYU_PUNCH),  imgSet.GetSprite(RYU_HIT_HIGH),  imgSet.GetSprite(RYU_VICTORY),  imgSet.GetSprite(RYU_DEATH),  imgSet.GetSprite(RYU_KICK),  imgSet.GetSprite(RYU_CROUCH), imgSet.GetSprite(RYU_SPECIAL)};
 	Sprite c[TOTAL_PLAYER_ANIMATIONS] = {imgSet.GetSprite(CHUN_STAND), imgSet.GetSprite(CHUN_WALK_RIGHT), imgSet.GetSprite(CHUN_WALK_LEFT), imgSet.GetSprite(CHUN_PUNCH), imgSet.GetSprite(CHUN_HIT_HIGH), imgSet.GetSprite(CHUN_VICTORY), imgSet.GetSprite(CHUN_DEATH), imgSet.GetSprite(CHUN_KICK), imgSet.GetSprite(CHUN_CROUCH), imgSet.GetSprite(CHUN_SPECIAL)};
 
 	img = &imgSet;
-	game = &Game(r,c);
+	game = &Game(r,c,imgSet.GetSprite(FIREBALL));
 
 
 	return window.Start(Update, Draw);

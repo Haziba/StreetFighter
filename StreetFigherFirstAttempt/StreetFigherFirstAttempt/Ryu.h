@@ -9,6 +9,9 @@ private:
 
 public:
 	Ryu(Sprite (&animationSet)[TOTAL_PLAYER_ANIMATIONS], Direction direcSet);
+
+	bool ThrowFireball();
+	Point FireballStart();
 };
 
 #endif
