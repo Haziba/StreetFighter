@@ -18,5 +18,5 @@ bool Ryu::ThrowFireball()
 
 Point Ryu::FireballStart()
 {
-	return BasePoint() + Point(60, 30);
+	return BasePoint() + Point(70, 25);
 }

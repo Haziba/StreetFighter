@@ -21,21 +21,7 @@ void Game::Update(InputHandler input)
 		TestHitBoxes(&ryu, &chun, &chunHealth, blood);
 		TestHitBoxes(&chun, &ryu, &ryuHealth, blood);
 
-		if(fireballActive)
-		{
-			fireball.currentFrame++;
-			if(fireball.currentFrame >= fireball.frames)
-				fireball.currentFrame = 0;
-			fireball.x += 20;
-		}
-
-		if(ryu.ThrowFireball())
-		{
-			fireballActive = true;
-			Point fbStart = ryu.FireballStart();
-			fireball.x = fbStart.X - fireball.shiftX;
-			fireball.y = fbStart.Y - fireball.shiftY;
-		}
+		UpdateFireball();
 
 		if(chunHealth.Dead())
 		{
@@ -97,4 +83,31 @@ bool Game::TestHitBoxes(Player *attacker, Player *defender, HealthBar *defenderH
 			NewBloodAt(blood, attacker->AttackEndPoint());
 			return true;
 		}
+
+	if(fireballActive)
+		if(defender->CheckCollision(Rect(fireball.x + 55 + fireball.shiftX, fireball.y + fireball.shiftY, 24, 28)))
+		{
+			defenderHealth->HitFor(5);
+			NewBloodAt(blood, Point(fireball.x + 79 + fireball.shiftX, fireball.y + 14 + fireball.shiftY));
+			return true;
+		}
+}
+
+void Game::UpdateFireball()
+{
+	if(fireballActive)
+	{
+		fireball.currentFrame++;
+		if(fireball.currentFrame >= fireball.frames)
+			fireball.currentFrame = 0;
+		fireball.x += 20;
+	}
+
+	if(ryu.ThrowFireball())
+	{
+		fireballActive = true;
+		Point fbStart = ryu.FireballStart();
+		fireball.x = fbStart.X - fireball.shiftX;
+		fireball.y = fbStart.Y - fireball.shiftY;
+	}
 }

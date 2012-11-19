@@ -26,6 +26,7 @@ private:
 
 	void NewBloodAt(BloodHit (&blood)[30], Point attackEndPoint);
 	bool TestHitBoxes(Player *attacker, Player *defender, HealthBar *defenderHealth, BloodHit (&blood)[30]);
+	void UpdateFireball();
 
 public:
 	Game(Sprite (&r)[TOTAL_PLAYER_ANIMATIONS], Sprite (&c)[TOTAL_PLAYER_ANIMATIONS], Sprite fireballSet);
