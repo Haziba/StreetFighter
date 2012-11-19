@@ -6,7 +6,7 @@
 #include "InputHandler.h"
 #include <iostream>
 
-const int TOTAL_PLAYER_ANIMATIONS = 9;
+const int TOTAL_PLAYER_ANIMATIONS = 10;
 
 enum PlayerStates
 {
@@ -19,6 +19,7 @@ enum PlayerStates
 	DIEING = 6,
 	KICKING = 7,
 	CROUCHING = 8,
+	SPECIALING = 9,
 };
 
 enum PlayerAnimations
@@ -32,6 +33,7 @@ enum PlayerAnimations
 	DEATH = 6,
 	KICK = 7,
 	CROUCH = 8,
+	SPECIAL = 9,
 };
 
 enum Controls
@@ -62,6 +64,8 @@ private:
 	bool attacking;
 
 	int comboStep;
+	int framesSinceLastStep;
+
 
 	void NextFrame();
 	void ChangeImage(Sprite *nextImage);
@@ -69,6 +73,7 @@ private:
 	void CenterImage(Sprite *image, int x, int y);
 
 	void UpdateHitBoxes();
+	void UpdateCombo(InputHandler input);
 
 	bool GettingHit();
 
@@ -80,9 +85,10 @@ private:
 	void Punch();
 	void Kick();
 	void Crouch();
+	void Special();
 
 protected:
-	Rect attackBoxes[TOTAL_PLAYER_ANIMATIONS][32];
+	Rect attackBoxes[TOTAL_PLAYER_ANIMATIONS][41];
 
 public:
 	Player(Sprite (&animationSet)[TOTAL_PLAYER_ANIMATIONS], Direction direcSet, int playerNumSet);

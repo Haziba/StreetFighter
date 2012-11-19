@@ -35,10 +35,10 @@ void Player::Draw(ImageHandler * img)
 {
 	img->DrawSprite(*currentImage, (direc == RIGHT));
 	
-	/*img->DrawSquare(topHitBox);
+	img->DrawSquare(topHitBox);
 	img->DrawSquare(bottomHitBox);
 	if(Attacking())
-		img->DrawSquare(AttackBox());*/
+		img->DrawSquare(AttackBox());
 }
 
 void Player::Update()
@@ -58,6 +58,8 @@ void Player::ReleaseControl()
 
 void Player::Input(InputHandler input)
 {
+	UpdateCombo(input);
+
 	if(!Attacking() && !GettingHit())
 	{
 		if(input.IsPressed(keys[playerNum][K_PUNCH]))
@@ -73,16 +75,36 @@ void Player::Input(InputHandler input)
 		if((!input.IsDown(keys[playerNum][K_RIGHT]) && state == WALKING_RIGHT) || (!input.IsDown(keys[playerNum][K_LEFT]) && state == WALKING_LEFT) || (!input.IsDown(keys[playerNum][K_DOWN]) && state == CROUCHING))
 			Stand();
 	}
+}
 
-	int comboSteps[][2] = {{keys[playerNum][K_DOWN], -1}, {keys[playerNum][K_RIGHT], keys[playerNum][K_DOWN]}, {keys[playerNum][K_RIGHT], -1}, {0x5A, -1}};
+void Player::UpdateCombo(InputHandler input)
+{
+	framesSinceLastStep++;
 
-	bool nextComboStep = true;
-	for(int i = 0; i < 2; i++)
-		if(!input.IsDown(comboSteps[comboStep][i]) && comboSteps[comboStep][i] >= 0)
-			nextComboStep = false;
-	if(nextComboStep)
-		comboStep++;
-	if(comboStep >= 4)
+	if(!Attacking() && !GettingHit())
+	{
+		int forwards = (playerNum == 0 ? keys[playerNum][K_RIGHT] : keys[playerNum][K_LEFT]);
+		int comboSteps[][2] = {{keys[playerNum][K_DOWN], -1}, {forwards, keys[playerNum][K_DOWN]}, {forwards, -1}, {keys[playerNum][K_PUNCH], -1}};
+
+		if(framesSinceLastStep > 9)
+			comboStep = 0;
+
+		bool nextComboStep = true;
+		for(int i = 0; i < 2; i++)
+			if(!input.IsDown(comboSteps[comboStep][i]) && comboSteps[comboStep][i] >= 0)
+				nextComboStep = false;
+		if(nextComboStep)
+		{
+			comboStep++;
+			framesSinceLastStep = 0;
+		}
+		if(comboStep >= 4)
+		{
+			Special();
+			comboStep = 0;
+		}
+	}
+	else
 		comboStep = 0;
 }
 
@@ -114,7 +136,7 @@ Rect Player::AttackBox()
 	{
 		Rect newBox = attackBoxes[state][currentImage->currentFrame];
 		if(direc == RIGHT)
-			newBox.X += -animations[STAND].width + currentImage->shiftX;
+			newBox.X = -attackBoxes[state][currentImage->currentFrame].X + (currentImage->width - animations[STAND].width) + currentImage->shiftX;
 		newBox.Offset(GetOriginPoint());
 		return newBox;
 	}
@@ -174,6 +196,12 @@ void Player::Crouch()
 	}
 }
 
+void Player::Special()
+{
+	ChangeImage(&animations[SPECIAL]);
+	state = SPECIALING;
+}
+
 void Player::WalkRight(bool leftKeyDown)
 {
 	if(state == STANDING || (state == WALKING_LEFT && !leftKeyDown))
@@ -196,7 +224,7 @@ void Player::WalkLeft(bool rightKeyDown)
 
 bool Player::Attacking()
 {
-	return state == PUNCHING || state == KICKING;
+	return state == PUNCHING || state == KICKING || state == SPECIALING;
 }
 
 bool Player::GettingHit()

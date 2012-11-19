@@ -38,7 +38,8 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	imgSet.LoadABitmap(L"Images/RyuDeath.png", RYU_DEATH, 20, 60, 177, 113, 0, 0, 16);
 	imgSet.LoadABitmap(L"Images/RyuKick.png", RYU_KICK, 20, 60, 122, 105, 0, 6, 5);
 	imgSet.LoadABitmap(L"Images/RyuCrouch.png", RYU_CROUCH, 20, 60, 87, 73, 0, 39, 4);
-		  
+	imgSet.LoadABitmap(L"Images/RyuSpecial.png", RYU_SPECIAL, 20, 60, 136, 104, 0, 7, 13);
+	
 	imgSet.LoadABitmap(L"Images/ChunStand.png", CHUN_STAND, 350, 70, 83, 101, 0, 0, 19);
 	imgSet.LoadABitmap(L"Images/ChunWalkLeft.png", CHUN_WALK_RIGHT, 350, 70, 111, 102, -20, 0, 31);
 	imgSet.LoadABitmap(L"Images/ChunWalkRight.png", CHUN_WALK_LEFT, 350, 70, 110, 102, -20, 0, 31);
@@ -48,7 +49,8 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	imgSet.LoadABitmap(L"Images/ChunDeath.png", CHUN_DEATH, 20, 60, 167, 109, -60, 0, 15);
 	imgSet.LoadABitmap(L"Images/ChunKick.png", CHUN_KICK, 20, 60, 131, 105, 5, -6, 10);
 	imgSet.LoadABitmap(L"Images/ChunCrouch.png", CHUN_CROUCH, 20, 60, 99, 63, -14, 40, 15);
-		  
+	imgSet.LoadABitmap(L"Images/ChunSpecial.png", CHUN_SPECIAL, 20, 60, 279, 114, -30, -13, 40);
+	
 	imgSet.LoadABitmap(L"Images/Background.png", BACKGROUND, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 	imgSet.LoadABitmap(L"Images/PauseOverlay.png", PAUSE_OVERLAY, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -58,8 +60,8 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	
 	imgSet.LoadABitmap(L"Images/BloodDrop.png", BLOOD_DROP, 0, 0, 5, 5);
 
-	Sprite r[TOTAL_PLAYER_ANIMATIONS] = {imgSet.GetSprite(RYU_STAND),  imgSet.GetSprite(RYU_MOVE_RIGHT),  imgSet.GetSprite(RYU_MOVE_LEFT),  imgSet.GetSprite(RYU_PUNCH),  imgSet.GetSprite(RYU_HIT_HIGH),  imgSet.GetSprite(RYU_VICTORY),  imgSet.GetSprite(RYU_DEATH),  imgSet.GetSprite(RYU_KICK),  imgSet.GetSprite(RYU_CROUCH)};
-	Sprite c[TOTAL_PLAYER_ANIMATIONS] = {imgSet.GetSprite(CHUN_STAND), imgSet.GetSprite(CHUN_WALK_RIGHT), imgSet.GetSprite(CHUN_WALK_LEFT), imgSet.GetSprite(CHUN_PUNCH), imgSet.GetSprite(CHUN_HIT_HIGH), imgSet.GetSprite(CHUN_VICTORY), imgSet.GetSprite(CHUN_DEATH), imgSet.GetSprite(CHUN_KICK), imgSet.GetSprite(CHUN_CROUCH)};
+	Sprite r[TOTAL_PLAYER_ANIMATIONS] = {imgSet.GetSprite(RYU_STAND),  imgSet.GetSprite(RYU_MOVE_RIGHT),  imgSet.GetSprite(RYU_MOVE_LEFT),  imgSet.GetSprite(RYU_PUNCH),  imgSet.GetSprite(RYU_HIT_HIGH),  imgSet.GetSprite(RYU_VICTORY),  imgSet.GetSprite(RYU_DEATH),  imgSet.GetSprite(RYU_KICK),  imgSet.GetSprite(RYU_CROUCH), imgSet.GetSprite(RYU_SPECIAL)};
+	Sprite c[TOTAL_PLAYER_ANIMATIONS] = {imgSet.GetSprite(CHUN_STAND), imgSet.GetSprite(CHUN_WALK_RIGHT), imgSet.GetSprite(CHUN_WALK_LEFT), imgSet.GetSprite(CHUN_PUNCH), imgSet.GetSprite(CHUN_HIT_HIGH), imgSet.GetSprite(CHUN_VICTORY), imgSet.GetSprite(CHUN_DEATH), imgSet.GetSprite(CHUN_KICK), imgSet.GetSprite(CHUN_CROUCH), imgSet.GetSprite(CHUN_SPECIAL)};
 
 	img = &imgSet;
 	game = &Game(r,c);
