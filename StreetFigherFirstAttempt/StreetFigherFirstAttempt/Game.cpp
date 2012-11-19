@@ -2,7 +2,7 @@
 
 
 Game::Game(Sprite (&r)[TOTAL_PLAYER_ANIMATIONS], Sprite (&c)[TOTAL_PLAYER_ANIMATIONS], Sprite fireballSet)
-	: ryu(r, LEFT), chun(c, RIGHT), ryuHealth(LEFT), chunHealth(RIGHT), fireball(fireballSet), fireballActive(false), paused(false)
+	: ryu(r, LEFT), chun(c, RIGHT), ryuHealth(LEFT), chunHealth(RIGHT), fireball(fireballSet), fireballActive(false), paused(true)
 {}
 
 void Game::Update(InputHandler input)

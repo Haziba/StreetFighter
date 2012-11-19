@@ -35,10 +35,10 @@ void Player::Draw(ImageHandler * img)
 {
 	img->DrawSprite(*currentImage, (direc == RIGHT));
 	
-	img->DrawSquare(topHitBox);
+	/*img->DrawSquare(topHitBox);
 	img->DrawSquare(bottomHitBox);
 	if(Attacking())
-		img->DrawSquare(AttackBox());
+		img->DrawSquare(AttackBox());*/
 }
 
 void Player::Update()
