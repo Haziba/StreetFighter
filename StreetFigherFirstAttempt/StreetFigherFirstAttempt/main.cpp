@@ -53,6 +53,8 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	
 	imgSet.LoadABitmap(L"Images/Background.png", BACKGROUND, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 	imgSet.LoadABitmap(L"Images/PauseOverlay.png", PAUSE_OVERLAY, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+	imgSet.LoadABitmap(L"Images/ChunVictorySplash.png", CHUN_VICTORY_SPLASH, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+	imgSet.LoadABitmap(L"Images/RyuVictorySplash.png", RYU_VICTORY_SPLASH, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	imgSet.LoadABitmap(L"Images/HealthBarOverlay.png", HEALTH_BAR_OVERLAY, 0, 0, 207, 15);
 	imgSet.LoadABitmap(L"Images/HealthBarRed.png", HEALTH_BAR_RED, 0, 0, 216, 15);

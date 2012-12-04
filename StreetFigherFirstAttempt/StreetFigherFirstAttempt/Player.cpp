@@ -6,7 +6,8 @@ Player::Player(Sprite (&animationSet)[TOTAL_PLAYER_ANIMATIONS], Direction direcS
 	topHitBox(0, 0, 50, 50),
 	bottomHitBox(0, 50, 50, 50),
 	state(STANDING),
-	comboStep(0)
+	comboStep(0),
+	originalX(animationSet[STAND].x)
 {
 	std::copy(&animationSet[0], &animationSet[TOTAL_PLAYER_ANIMATIONS], &animations[0]);
 	currentImage = &animations[STAND];
@@ -302,4 +303,12 @@ void Player::NextFrame()
 			}
 		}
 	}
+}
+
+void Player::Reset()
+{
+	Stand();
+	comboStep = 0;
+	animations[STAND].x = originalX;
+	RecenterImages();
 }

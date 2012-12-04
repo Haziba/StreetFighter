@@ -54,3 +54,11 @@ bool HealthBar::Dead()
 {
 	return health <= 0;
 }
+
+void HealthBar::Reset()
+{
+	health = 100;
+	yellowWidth = 200;
+	yellowDropCountdown = 0;
+	yellowDeInc = 0;
+}

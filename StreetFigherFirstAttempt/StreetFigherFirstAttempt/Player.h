@@ -66,6 +66,8 @@ private:
 	int comboStep;
 	int framesSinceLastStep;
 
+	int originalX;
+
 
 	void NextFrame();
 	void ChangeImage(Sprite *nextImage);
@@ -109,6 +111,8 @@ public:
 
 	void Win();
 	void Die();
+
+	void Reset();
 };
 
 #endif

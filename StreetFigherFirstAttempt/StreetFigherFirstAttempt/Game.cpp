@@ -14,6 +14,14 @@ void Game::Update(InputHandler input)
 			ryu.Input(input);
 			chun.Input(input);
 		}
+		else
+			if(input.IsPressed(0x52)) // R key pressed
+			{
+				ryu.Reset();
+				chun.Reset();
+				chunHealth.Reset();
+				ryuHealth.Reset();
+			}
 
 		ryu.Update();
 		chun.Update();
@@ -57,6 +65,10 @@ void Game::Draw(ImageHandler *img)
 		blood[i].Draw(img);
 	if(fireballActive)
 		img->DrawSprite(fireball);
+	if(ryuHealth.Dead())
+		img->DrawSprite(CHUN_VICTORY_SPLASH);
+	if(chunHealth.Dead())
+		img->DrawSprite(RYU_VICTORY_SPLASH);
 	if(paused)
 		img->DrawSprite(PAUSE_OVERLAY);
 }

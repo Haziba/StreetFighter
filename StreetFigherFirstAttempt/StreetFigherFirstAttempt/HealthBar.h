@@ -19,6 +19,7 @@ public:
 	void Update();
 	void HitFor(int val);
 	bool Dead();
+	void Reset();
 };
 
 #endif
